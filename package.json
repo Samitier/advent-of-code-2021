@@ -1,0 +1,27 @@
+{
+  "name": "advent-of-code-2021",
+  "version": "1.0.0",
+  "description": "Advent of code 2021",
+  "scripts": {
+    "dev": "ts-node-dev",
+    "test": "jest",
+    "test:watch": "jest --watchAll"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^27.0.2",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "eslint": "^8.0.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-jest": "^25.0.5",
+    "jest": "^27.2.5",
+    "prettier": "^2.4.1",
+    "ts-jest": "^27.0.5",
+    "typescript": "^4.4.3"
+  },
+  "dependencies": {
+    "ts-node-dev": "^1.1.8"
+  },
+  "type": "module"
+}
