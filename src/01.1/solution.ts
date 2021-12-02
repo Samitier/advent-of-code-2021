@@ -1,5 +1,3 @@
-// https://adventofcode.com/2021/day/1
-
 import input from './input.json'
 
 function sonarSweep(values: number[]) {

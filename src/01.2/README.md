@@ -1,3 +1,5 @@
+https://adventofcode.com/2021/day/1#part2
+
 --- Part Two ---
 Considering every single measurement isn't as useful as you expected: there's just too much noise in the data.
 
