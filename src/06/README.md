@@ -1,4 +1,4 @@
-https://adventofcode.com/2021/day/6
+https://adventofcode.com/2022/day/6
 
 --- Day 6: Lanternfish ---
 The sea floor is getting steeper. Maybe the sleigh keys got carried this way?
@@ -49,3 +49,17 @@ Each day, a 0 becomes a 6 and adds a new 8 to the end of the list, while each ot
 In this example, after 18 days, there are a total of 26 fish. After 80 days, there would be a total of 5934.
 
 Find a way to simulate lanternfish. How many lanternfish would there be after 80 days?
+
+--- Part Two ---
+Your device's communication system is correctly detecting packets, but still isn't working. It looks like it also needs to look for messages.
+
+A start-of-message marker is just like a start-of-packet marker, except it consists of 14 distinct characters rather than 4.
+
+Here are the first positions of start-of-message markers for all of the above examples:
+
+mjqjpqmgbljsphdztnvjfqwrcgsmlb: first marker after character 19
+bvwbjplbgvbhsrlpgdmjqwftvncz: first marker after character 23
+nppdvjthqldpwncqszvftbrmjlhg: first marker after character 23
+nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg: first marker after character 29
+zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw: first marker after character 26
+How many characters need to be processed before the first start-of-message marker is detected?
