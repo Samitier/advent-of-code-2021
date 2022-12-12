@@ -55,11 +55,10 @@ async function parseInput() {
   return { monkeys, allDivisibleBy }
 }
 
-async function solution1() {
+async function solution(rounds = 20) {
   const { monkeys, allDivisibleBy } = await parseInput()
-  const totalRounds = 10000
 
-  for (let i = 0; i < totalRounds; ++i) {
+  for (let i = 0; i < rounds; ++i) {
     for (let monkey of monkeys) {
       for (let item of monkey.items) {
         const newItem = monkey.operation(item % allDivisibleBy)
@@ -71,7 +70,8 @@ async function solution1() {
     }
   }
   const [first, second] = monkeys.map((m) => m.inspectionsCount).sort((a, b) => (b > a ? 1 : -1))
-  console.log(monkeys, first * second)
+  console.log(first * second)
 }
 
-solution1()
+solution()
+solution(10000)
