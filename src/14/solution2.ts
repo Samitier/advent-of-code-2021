@@ -15,7 +15,7 @@ class SandOutOfBoundsError extends Error {}
 
 async function parseInput() {
   const sandSource: Coord = { x: 500, y: 0 }
-  const paths: Coord[][] = (await fs.readFile(__dirname + '/input-example.txt'))
+  const paths: Coord[][] = (await fs.readFile(__dirname + '/input.txt'))
     .toString()
     .split('\n')
     .map((pathStr) =>
@@ -45,10 +45,10 @@ function debugRender(matrix: Material[][], sandSource?: Coord) {
 
 function buildMatrix(paths: Coord[][]) {
   const maxX = Math.max(...paths.flatMap((a) => a.map((b) => b.x))) + 1
-  const maxY = Math.max(...paths.flatMap((a) => a.map((b) => b.y))) + 1
+  const maxY = Math.max(...paths.flatMap((a) => a.map((b) => b.y))) + 3
   const matrix: Material[][] = new Array(maxY)
     .fill('')
-    .map(() => new Array(maxX).fill(Material.air))
+    .map((_, i) => new Array(maxX).fill(i === maxY - 1 ? Material.rock : Material.air))
   for (let path of paths) {
     for (let i = 0; i < path.length - 1; ++i) {
       const from = path[i]
@@ -65,27 +65,28 @@ function buildMatrix(paths: Coord[][]) {
   return matrix
 }
 
-function calculateSandfall(matrix: Material[][], { x, y }: Coord): void {
+function calculateSandfall(matrix: Material[][], { x, y }: Coord, sandSource: Coord): void {
   const newY = y + 1
-  if (newY >= matrix.length) {
-    throw new SandOutOfBoundsError()
-  }
   if (matrix[newY][x] === Material.air) {
-    return calculateSandfall(matrix, { x, y: newY })
+    return calculateSandfall(matrix, { x, y: newY }, sandSource)
   }
   let newX = x - 1
   if (newX < 0) {
-    throw new SandOutOfBoundsError()
+    for (let i = 0; i < matrix.length; ++i)
+      matrix[i].unshift(i === matrix.length - 1 ? Material.rock : Material.air)
+    newX = 0
+    sandSource.x += 1
   }
   if (matrix[newY][newX] === Material.air) {
-    return calculateSandfall(matrix, { x: newX, y: newY })
+    return calculateSandfall(matrix, { x: newX, y: newY }, sandSource)
   }
   newX = x + 1
   if (newX >= matrix[0].length) {
-    throw new SandOutOfBoundsError()
+    for (let i = 0; i < matrix.length; ++i)
+      matrix[i].push(i === matrix.length - 1 ? Material.rock : Material.air)
   }
   if (matrix[newY][newX] === Material.air) {
-    return calculateSandfall(matrix, { x: newX, y: newY })
+    return calculateSandfall(matrix, { x: newX, y: newY }, sandSource)
   }
   matrix[y][x] = Material.sand
 }
@@ -96,11 +97,12 @@ async function solution() {
   let unitsOfSand = 0
   try {
     while (true) {
-      calculateSandfall(matrix, { ...sandSource })
+      if (matrix[sandSource.y][sandSource.x] === Material.sand) throw new SandOutOfBoundsError()
+      calculateSandfall(matrix, { ...sandSource }, sandSource)
       ++unitsOfSand
-      // debugRender(matrix)
     }
   } catch (e) {
+    debugRender(matrix)
     console.log(unitsOfSand)
     console.log(e)
   }
